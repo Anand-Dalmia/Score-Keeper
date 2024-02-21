@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Score Keeper</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id="root" style="text-align: center;"></div>
+    <script type="text/babel">
+
+        let score=0;
+        let wicket=0;
+        let ballWiseRes= [];
+        let hit=0;
+        let inputRef= React.createRef();
+
+        // function clickOne(){
+        //     alert('1 is clicked');
+        // }
+
+        // function addOne(){
+        //     if(wicket<10){
+        //         score+=1;
+        //         rootElement.render(<App/>);
+        //         console.log(score);
+        //     }      
+                       
+        // }
+
+        // function addTwo(){
+        //     if(wicket<10){
+        //         score+=2;
+        //         rootElement.render(<App/>);
+        //         console.log(score);
+        //     }
+        // }
+
+        //Niche jo likha hai addScore wala wo title pe show kar raha tha na ki input box
+
+        // function addScore(num){
+        //     if(wicket<10){
+        //         ballWiseRes.push(num);
+        //         score+=num;
+        //         rootElement.render(<App/>);
+        //         console.log(ballWiseRes);
+        //     }
+        // }
+
+        function addScore(num){
+            hit= num;   
+                    
+            rootElement.render(<App/>);
+            console.log(hit);
+               
+            }
+        
+
+        //Niche jo likha hai wicketScore wala wo title pe show kar raha tha na ki input box
+
+        // function wicketScore(){
+        //     if(wicket<10){
+        //         ballWiseRes.push("w");
+        //         wicket+=1;
+        //         rootElement.render(<App/>);
+        //         console.log(ballWiseRes);
+        //     }
+        // }
+
+        function wicketScore(){
+            hit="w";            
+            rootElement.render(<App/>);
+                
+            }
+        
+
+
+        const ScoreButtons=()=>{
+
+            return(
+            <div>
+
+                {/* This reference to the function  --<button onClick={addTwo}>2</button>*/}
+
+                <button onClick={()=>addScore(0)}>0</button>
+                <button onClick={()=>addScore(1)}>1</button>
+                <button onClick={()=>addScore(2)}>2</button>             
+                {/* This is inline to the function*/}
+                <button onClick={()=>addScore(3)}>3</button>   
+                <button onClick={()=>addScore(4)}>4</button>
+                <button onClick={()=>addScore(5)}>5</button>
+                <button onClick={()=>addScore(6)}>6</button>
+                <button onClick={wicketScore}>wicket</button>
+
+            </div>
+
+            )
+        }
+
+
+
+//         const Result = () => {
+//     return (
+//         <div>
+//             {ballWiseRes.map((res, index) => (
+//                 <span key={index} style={{ marginRight: '10px' }}>
+//                     {res === 0 ? <strong>.</strong> : null}
+//                     {index % 6 === 0 && index !== 0 ? <br /> : null}
+//                     {res}
+//                 </span>
+//             ))}
+//         </div>
+//     );
+// }
+
+const Result = () => (
+        <>
+        <div>
+            {ballWiseRes.map((res, index) => (
+                <span key={index} style={{ marginRight: '10px', color:res ==='w'? 'red' : 'black' }}>
+                    {res === 0 ? <strong>.</strong> : res}
+                    {index % 6 === 0 && index !== 0 ? <br /> : null}
+                </span>
+            ))}
+        </div>
+        </>
+    );
+
+    function handleSubmit(event){
+        event.preventDefault();
+        if(hit=="w"){
+            wicket+=1;
+        }else{
+            score+=hit;
+        }
+         
+        // ballWiseRes.unshift(hit);
+        ballWiseRes.unshift(
+            // <span> {hit} {","} {inputRef.current.value} </span>
+            // 2nd ways 
+            <span>{`${hit}, ${inputRef.current.value}`}</span>
+        );
+        rootElement.render(<App/>);
+        // console.log(ballWiseRes);
+        console.log(inputRef.current.value);
+    }
+
+
+const Form =()=>(
+    <>
+        <form onSubmit={handleSubmit} >
+            <input value= {hit} />
+            <input ref= {inputRef} placeholder="Add a comment"/>
+            <button>Submit</button>                     
+        </form>
+        </>
+)
+
+
+
+
+
+        const App =()=>{
+
+            return(
+            <>
+            <h1>SCORE KEEPER</h1>
+            <h2>SCORE: {score}/{wicket}</h2>
+            <ScoreButtons/>
+            {/*<Result/> */}
+
+            <br/>
+            <Form />
+            <hr/>
+
+            {ballWiseRes.map((res,index)=>(
+                <p key= {index} > {res} </p>
+            ))}
+            
+            </>
+            )
+        }
+
+        const rootElement= ReactDOM. createRoot(document.getElementById('root'));
+        rootElement.render(<App/>);
+
+    </script>
+</body>
+</html>
