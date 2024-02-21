@@ -143,6 +143,9 @@ const Result = () => (
             // 2nd ways 
             <span>{`${hit}, ${inputRef.current.value}`}</span>
         );
+
+        hit=0;
+        inputRef.current.value=" ";
         rootElement.render(<App/>);
         // console.log(ballWiseRes);
         console.log(inputRef.current.value);
